@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>IEQ 3D Floor Visualisation</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="loading-screen">
+        <div class="loading-message">Loading...</div>
+    </div>      
+    <div class="scanlines-overlay"></div>
+
+    <!-- Hidden heading for accessibility -->
+    <header class="hidden">
+        <h1>IEQ 3D Floor Visualisation</h1>
+    </header>
+
+    <main class="scroll-snap-container">
+
+        <!-- Intro Section -->
+        <section class="content prose">
+            <div class="container">
+                <p>Imagine this: it’s <span class="flash">2:00 pm</span> on a summer weekday. The office is packed. HVAC
+                    systems are running at full power. The electricity bill is climbing.</p>
+                <p>And yet, people are still uncomfortable.<span class="flash">&#9615;</span></p>
+            </div>
+        </section>
+
+        <!-- Problem Overview -->
+        <section class="content prose">
+            <div class="container" style="z-index: 4;">
+                <p>Across Sydney’s commercial buildings, monitoring reveals a troubling pattern: peak discomfort and
+                    peak energy use are happening simultaneously.</p>
+                <div id="line-chart-energy-vs-ppd" class="chart-row"></div>
+                <p>Most systems only track air temperature — which is just a fraction of the comfort equation.<span
+                        class="flash">&#9615;</span></p>
+            </div>
+        </section>
+
+        <!-- Human Physiology -->
+        <section id="human" class="content prose">
+            <div class="container tab-row">
+                <div>
+                    <p>The human body loses:</p>
+                    <ul>
+                        <li style="color: #ffff00;">~15% via convection/conduction</li>
+                        <li style="color: #36d3eb;">~22% via evaporation</li>
+                        <li style="color: #cc0000;">~60% via radiation</li>
+                    </ul>
+                    <p>What matters more:</p>
+                    <ul>
+                        <li>Surface temperatures</li>
+                        <li>Humidity & CO₂ levels</li>
+                        <li>Airflow, light, and sound.<span class="flash">&#9615;</span></li>
+                    </ul>
+                </div>
+                <div class="overlay-container">
+                    <div id="human-heat-loss-chart"></div>
+                    <img src="./assets/human.webp" class="overlay-image" alt="Human heat loss model" />
+                </div>
+            </div>
+        </section>
+
+        <!-- Coal Emissions -->
+        <section class="content prose">
+            <div class="container">
+                <p>Australia is the highest per-capita coal emitter in the G20.</p>
+                <div id="coal-emissions-chart"></div>
+                <p>Our buildings are emission-intensive, underperforming on comfort, and increasingly under
+                    scrutiny...<span class="flash">&#9615;</span></p>
+            </div>
+        </section>
+
+        <!-- Methane Emissions -->
+        <section class="content prose">
+            <div class="container">
+                <p>In 2025, satellite data revealed methane emissions from Australian coal mines were underreported by
+                    up to 106%.</p>
+                <div id="methane-chart"></div>
+                <p>As ESG compliance tightens, this level of opacity becomes a financial and reputational risk.<span
+                        class="flash">&#9615;</span></p>
+            </div>
+        </section>
+
+        <!-- SAMBA Overview -->
+        <section class="content prose">
+            <div class="container">
+                <h2>Introducing SAMBA</h2>
+                    <p>SAMBA is an IEQ monitoring system developed by the University of Sydney’s IEQ Lab. It can track:</p>
+                    <ul>
+                        <li>Radiant and air temperature</li>
+                        <li>CO₂ concentration</li>
+                        <li>Relative humidity</li>
+                        <li>Light and noise levels</li>
+                        <li>Comfort indices (PPD, PMV)</li>
+                    </ul>
+                    <div style="float: right;">
+                        <p>Unlike legacy systems, SAMBA is:</p>
+                        <ul>
+                            <li>Continuous</li>
+                            <li>Spatially distributed</li>
+                            <li>Actionable.<span class="flash">&#9615;</span></li>
+                        </ul>
+                        <span class="flash" style="font-size: 12vh; float: right;">&#8964;</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Dashboard -->
+        <section id="dashboard" class="content">
+            <div class="container">
+                <div class="tab-row">
+
+                    <!-- Tabs: Season + Variable -->
+                    <div class="tab-column">
+                        <div id="season-tabs">
+                            <button class="season-tab active" data-season="Summer">
+                                <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="20"
+                                    height="20">
+                                    <path fill="currentColor" class="a"
+                                        d="m140 31v30h20v-60h-20zm-139 119.8v10.2h58v-20.5h-58zm240.2-0.2l0.3 10 56.5 0.5v-20.5h-57.1zm-101.2 119v29.5h20v-59h-20zm88.1-212.2l-17.3 17.2 14.7 13.4 33.2-32.4c-8.9-9.3-11.9-12.8-12.4-13.7-0.8-1.5-3.7 1-18.2 15.5zm-180.6-9.1l-7.1 7.3 33.1 33.6 14.5-14.6-33.5-33.6zm67.5 41v9.8h-19v20h-20v63h20v21h19v20h68v-20h20v-21h20v-63h-20v-20h-20v-19.5h-68zm-58.7 140l-16.3 16.2 14.8 15 33.3-34c-11.3-10.4-14.8-13.5-15.1-13.5-0.2 0-7.8 7.4-16.7 16.3zm161.9-9l-7.2 7.2 33.5 32.7c10.5-10.6 13.6-14 13.6-14.4 0-0.4-7.1-8-15.8-16.8-8.7-8.8-16-16-16.3-16-0.3 0-3.8 3.3-7.8 7.3z" />
+                                </svg>
+                            </button>
+                            <button class="season-tab" data-season="Autumn">
+                                <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="20"
+                                    height="20">
+                                    <path fill="currentColor" class="a"
+                                        d="m143 21.5v8.5h-16.5l1.5 40h-18.5l0.5-16h-15v61.5l-15-0.5v-16h-56v15l16.3 0.5-0.3 30.5h15v17h16v17h-15v14.5l-17-0.5v16h43.5v15h44.5v-15h16v47h-16c0 28.7 0 29 2.2 29.6 1.3 0.3 4.3 0.4 6.8 0.2l4.5-0.3 0.5-14.5h15.5l-0.5-62h18v15h43l-0.5-15h43.5v-16l-16.5 0.5-0.5-14.5h-14c0-10.8-0.2-14.7-0.5-15.5-0.4-1.2 0.8-1.5 7-1.5h7.5v-17h16v-31l16 0.5v-15.5h-56v16h-16v-61h-14v16h-16v-40h-16v-17h-14z" />
+                                </svg>
+                            </button>
+                            <button class="season-tab" data-season="Winter">
+                                <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="20"
+                                    height="20">
+                                    <path fill="currentColor" fill-rule="evenodd" class="a"
+                                        d="m140 0h20l-0.5 40h20.5v-19h20v20h-20v20l-20-0.5v38.8c0 21.3-0.1 39-0.3 39.5-0.1 0.4 4.4 0.8 20.3 1.2v-21h20v-38h21v19h19.5l-0.5-40h21v21h20v20h-20v18l19.5 0.5 0.5 21.5h-20v-22h-40.5l0.5 21h-41v20l40.5-0.5v19.5h40.5v20h20l-0.5 20.5h-19.5v19.5h-21l0.5-39h-20v19.5l-20.5 0.5v-40h-20v-20h-20.5v79h20.5v20h-20.5l0.5 40h-20v-40h-20v20h-20v-21h20v-19h20v-79h-20v20h-20v40l-20.5-0.5-0.5-19.5h-20v39h-20v-19.5h-19.5l-0.5-20.5h20v-19h-20v-20h21v19h39v-20l41 0.5v-19.5h-41v-21h-40v-18h-20v-20h20v-21h20v40h20v-19h21v38h20v21h20v-79.5l-20 0.5v-20h-20v-20h20v19h20zm-120.9 118.9l20 0.6 0.4 21.5h-20.5zm241.9 41.1h20v20l-19.5-0.5zm-60.9 98v21h-20l-0.2-9.9c-0.2-7.9 0.1-10.1 1.3-10.5 0.8-0.2 5.3-0.5 18.9-0.6z" />
+                                </svg>
+                            </button>
+                            <button class="season-tab" data-season="Spring">
+                                <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="20"
+                                    height="20">
+                                    <path fill="currentColor" fill-rule="evenodd" class="a"
+                                        d="m127 14h45v14h14v32h16v-14h28v14h13v43h-13v15h-15.5v15h28.5v44h-13v16h-43v-31h-16v31h-15v46h16l-0.5-16h15.5v-14h43v14h-15l0.5 15.3-14 0.2v15.5h-45.5v16c0 14.7-0.1 16-1.8 15.6-0.9-0.3-4.1-0.5-12.2-0.6v-16h-29v-16h-15v-14h29v14h15.5v-60h-14v-28.5l-15.5-0.5v29h-43v-16h-14.5l0.5-44h29v-15h-15v-15h-14.5l0.5-43h14v-14h28v14h15v-32h14zm0 75h-14v44h15v15h44v-15h15v-44h-15l-0.5-13.5-44.5-0.5zm1 0l21.3-0.1c11.7 0 21.5 0.2 21.7 0.4 0.3 0.3 0.4 10.2 0 43.7h-43z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="tab-buttons" id="data-buttons">
+                            <button class="data-btn active" data-var="ppd">PPD</button>
+                            <button class="data-btn" data-var="pmv">PMV</button>
+                            <button class="data-btn" data-var="rh">Relative Humidity</button>
+                            <button class="data-btn" data-var="lux">Illuminance</button>
+                            <button class="data-btn" data-var="spl">Sound Pressure</button>
+                            <button class="data-btn" data-var="co2">CO₂ Concentration</button>
+                        </div>
+                    </div>
+
+                    <!-- 3D Surface Plot -->
+                    <div class="surface-plot">
+                        <div id="surface-plot"></div>
+                        <div class="meter-block">
+                            <label for="ci-global">Carbon Intensity</label>
+                            <meter id="ci-global" min="0" max="700" optimum="0" low="50" high="300"></meter>
+                        </div>
+                    </div>
+
+                    <!-- Alert Box -->
+                    <div class="alert-container">
+                        <div id="alert-box" class="hidden"></div>
+                    </div>
+                </div>
+
+                <!-- Time Slider -->
+                <div id="time-slider-container">
+                    <label id="time-label">Hour: 0</label>
+                    <input type="range" id="time-slider" min="0" max="23" step="1" value="12">
+                </div>
+
+                <!-- Zone Bar Charts + Floor Tabs -->
+                <div class="tab-row">
+                    <div class="zone-bar-charts">
+                        <div id="bar-chart-ppd"></div>
+                        <div id="bar-chart-pmv"></div>
+                        <div id="bar-chart-rh"></div>
+                        <div id="bar-chart-lux"></div>
+                        <div id="bar-chart-spl"></div>
+                        <div id="bar-chart-co2"></div>
+                    </div>
+                    <div id="floor-tab-buttons" class="tab-buttons"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SAMBA Benefits -->
+        <section class="content prose" style="width: auto;">
+            <div class="container">
+                <p style="font-size: 6vh;">With SAMBA, you can:</p>
+                <ul>
+                    <li>Diagnose comfort issues by floor, zone, and hour</li>
+                    <li>Correct HVAC inefficiencies like overcooling</li>
+                    <li>Reduce peak energy use without compromising comfort</li>
+                    <li>Inform ventilation improvements based on CO₂ and humidity trends.<span
+                            class="flash">&#9615;</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Closing Statement -->
+        <section class="content prose" style="width: auto;">
+            <div class="container" style="font-size: 6vh;">
+                <p style="font-size: 8vh; margin-bottom: 0;">SAMBA empowers:</p>
+                <ul>
+                    <li>Smarter zoning</li>
+                    <li>Energy savings</li>
+                    <li>Carbon footprint reductions</li>
+                    <li>Better occupant wellbeing.<span class="flash">&#9615;</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Final Statement -->
+        <section class="content prose">
+            <div class="container" style="text-align: center;">
+                <p style="font-size: 8vh; margin-bottom: 0;">In this data-driven age,</p>
+                <p style="font-size: 6vh;">efficiency is no longer optional,</p>
+                <p style="font-size: 5vh;">transparency is no longer negotiable.<span class="flash">&#9615;</p>
+            </div>
+        </section>
+
+        <!-- Final Statement -->
+        <section class="content prose">
+            <div class="container" style="font-size: 10vh; text-align: center;">
+                <p>Experience SAMBA.<span class="flash">&#9615;</p>
+            </div>
+        </section>
+
+        <!-- ASCII Footer -->
+        <section class="content prose">
+            <div class="container" style="text-align: center;">
+                <pre>
+                                 *         
+                                  @)       
+ /@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@/        
+(@              @@@                        
+  *      @@@    @@@                        
+      /@@/      @@@                        
+     @@@        @@@                        
+    @@@         @@@                        
+   (@@@         @@@    @@@@\               
+   (@@@         @@@   @@@   @@             
+    @@@*        @@@   @@@    @)            
+     @@@%       @@@   @@@   @)             
+       @@@@    /@@    @@@ @@               
+        \@@@@@@@      @@@@                 
+            \@@@@@@@@@@@@                  
+                      @@@                  
+                      @@@                  
+                      @@@                  
+                     @@@/               *  
+                    @@@/                 @)
+                /@@@@@@@@@@@@@@@@@@@@@@@@/ 
+               @@              \@@@@@/     
+              *                             
+        </pre>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Main JS entry point -->
+    <script type="module" src="./scripts/main.js"></script>
+</body>
+
+</html>
