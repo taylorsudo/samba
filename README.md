@@ -57,9 +57,9 @@ The primary goal was to evaluate whether users could:
 ### Tasks Given to Users
 
 Participants were asked to:
-- Determine the cause of high PPD at 3:00pm during summer
-- Identify the floor and time with the highest CO₂ concentration
-- Explain what the 3D surface plot shows for a specific hour and season
+1. Determine the cause of high PPD at 3:00pm during summer
+2. Identify the floor and time with the highest CO₂ concentration
+3. Explain what the 3D surface plot shows for a specific hour and season
 
 ### Participants
 The study included 10 participants: 5 interaction design students, 3 engineering students, and 2 professionals working in sustainability. All were new to the interface and had no prior exposure before testing.
