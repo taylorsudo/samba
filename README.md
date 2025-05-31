@@ -1,5 +1,7 @@
 # SAMBA Visualiser
 
+![SAMBA Visualiser](./assets/samba.gif)
+
 ## Narrative
 
 We collaborated with Tom Parkinson at the University of Sydney’s IEQ Lab to explore how low-cost sensors could improve building insight. His team developed SAMBA, which tracks ten indoor environmental variables. We used a year’s worth of five-minute sensor readings from a real multi-floor office in Sydney.
@@ -16,7 +18,7 @@ Inspired by schematic sci-fi interfaces, the SAMBA visualiser includes a 3D surf
 
 I wrote a custom Python script to merge and preprocess SAMBA sensor data with hourly carbon intensity data from Electricity Maps. The script aligns timestamps, filters by season, and outputs a unified JSON file for use in the dashboard. Zones are grouped by floor, and the visualisation dynamically adjusts color scales based on the selected metric and its range.
 
-Early feedback noted the interface felt visually rich but cognitively heavy, especially for locating problem areas. I redesigned the layout to show all zones per floor at once, with a flashing alert for the most suboptimal zone. Cluttered <meter> displays were replaced with grouped bar charts for better clarity and scalability.
+Early feedback noted the interface felt visually rich but cognitively heavy, especially for locating problem areas. I redesigned the layout to show all zones per floor at once, with a flashing alert for the most suboptimal zone. Cluttered `<meter>` displays were replaced with grouped bar charts for better clarity and scalability.
 
 While I developed all the code, I used ChatGPT to refactor and further modularise the JavaScript, improving performance and maintainability.
 The final product is both analytical and evocative, enabling users to track indoor comfort and environmental impact across a spatially and temporally detailed model. It invites reflection on the sensory experience of occupants—while anchoring that experience within the broader systems that shape our climate future.
@@ -50,7 +52,7 @@ Task 1 and Task 3 were successfully completed by most users. For Task 2, several
 
 ### Design Changes
 
-In response, the individual zone meters were replaced with per-floor bar graphs, with each zone represented as a bar. This change enabled faster cross-zone comparisons within a floor and significantly reduced visual clutter. The graphs are now dynamically updated based on the selected variable and time, making the visualiser more scannable and responsive.
+In response, the individual zone meters were replaced with per-floor bar graphs, with each zone represented as a bar. This change enabled faster cross-zone comparisons within a floor and significantly reduced visual clutter. The graphs are now dynamically updated based on the selected variable and time, making the visualiser more scannable and responsive. Additionally, I added `<abbr>` tags to abbreviations with hoverable definitions to improve accessibility.
 
 Follow-up informal testing showed improved task completion rates—particularly for identifying extreme values like CO₂ spikes. The new layout also scales better for buildings with many zones, allowing users to quickly scan patterns without losing spatial context.
 

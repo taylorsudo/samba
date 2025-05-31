@@ -23,7 +23,10 @@ html, body {
   color: rgb(var(--primary));
   text-shadow: 0 0 8px rgb(var(--secondary));
   overflow-y: scroll;
-  cursor: url('./assets/cursor.svg'), auto;
+}
+
+* {
+  cursor: url('./assets/cursor.svg'), default;
 }
 
 /* ===========================================
@@ -34,7 +37,8 @@ h1 {
   margin: 0;
 }
 
-u {
+abbr {
+  text-decoration: underline;
   text-decoration-style: dotted;
   text-decoration-thickness: 3px;
   text-underline-offset: 6px;
@@ -97,6 +101,36 @@ pre {
   z-index: 9999;
   display: none;
   transform: translate(0.5em, 1em); /* offset from cursor */
+}
+
+/* ===========================================
+   Links
+=========================================== */
+
+a {
+  color: rgb(var(--primary));
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  color: rgb(var(--light));
+  text-shadow: 0 0 8px rgb(var(--light));
+}
+
+a.button {
+  color: rgb(var(--primary));
+  border: 4px solid rgb(var(--primary));
+  padding: 0.5em 1em;
+  font-size: 3vh;
+  text-shadow: none;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a.button:hover {
+  background-color: rgb(var(--primary));
+  color: rgb(var(--dark));
 }
 
 /* ===========================================
