@@ -17,6 +17,7 @@
         <div class="loading-message">Loading...</div>
     </div>      
     <div class="scanlines-overlay"></div>
+    <div id="cursor-bubble"></div>
 
     <!-- Hidden heading for accessibility -->
     <header class="hidden">
@@ -85,7 +86,7 @@
                 <p>In 2025, satellite data revealed methane emissions from Australian coal mines were underreported by
                     up to 106%.</p>
                 <div id="methane-chart"></div>
-                <p>As ESG compliance tightens, this level of opacity becomes a financial and reputational risk.<span
+                <p>As <u class="hover-target" data-tooltip="Environmental, Social and Governance">ESG</u> compliance tightens, this level of opacity becomes a financial and reputational risk.<span
                         class="flash">&#9615;</span></p>
             </div>
         </section>
@@ -94,13 +95,13 @@
         <section class="content prose">
             <div class="container">
                 <h2>Introducing SAMBA</h2>
-                    <p>SAMBA is an IEQ monitoring system developed by the University of Sydney’s IEQ Lab. It can track:</p>
+                    <p><u class="hover-target" data-tooltip="Sentient Ambient Monitoring of Buildings in Australia">SAMBA</u> is an IEQ monitoring system developed by the University of Sydney’s IEQ Lab. It can track:</p>
                     <ul>
                         <li>Radiant and air temperature</li>
                         <li>CO₂ concentration</li>
                         <li>Relative humidity</li>
                         <li>Light and noise levels</li>
-                        <li>Comfort indices (PPD, PMV)</li>
+                        <li>Comfort indices (<u class="hover-target" data-tooltip="Predicted Percentage Dissatisfied">PPD</u>, <u class="hover-target" data-tooltip="Predicted Mean Vote">PMV</u>)</li>
                     </ul>
                     <div style="float: right;">
                         <p>Unlike legacy systems, SAMBA is:</p>

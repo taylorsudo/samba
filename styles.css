@@ -23,6 +23,7 @@ html, body {
   color: rgb(var(--primary));
   text-shadow: 0 0 8px rgb(var(--secondary));
   overflow-y: scroll;
+  cursor: url('./assets/cursor.svg'), auto;
 }
 
 /* ===========================================
@@ -31,6 +32,12 @@ html, body {
 h1 {
   text-align: center;
   margin: 0;
+}
+
+u {
+  text-decoration-style: dotted;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
 }
 
 pre {
@@ -69,6 +76,27 @@ pre {
   33%  { content: " ▓▒"; }
   66%  { content: " ▓▒░"; }
   100% { content: " ▓"; }
+}
+
+/* ===========================================
+   Cursor
+=========================================== */
+
+.hover-target {
+  display: inline-block;
+}
+
+#cursor-bubble {
+  position: fixed;
+  background-color: rgb(var(--primary));
+  color: black;
+  padding: 0.5em 1em;
+  font-size: 2.5vh;
+  text-shadow: none;
+  pointer-events: none;
+  z-index: 9999;
+  display: none;
+  transform: translate(0.5em, 1em); /* offset from cursor */
 }
 
 /* ===========================================

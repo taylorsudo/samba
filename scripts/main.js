@@ -14,6 +14,26 @@ let activeVar = "ppd";
 let selectedSeason = "Summer";
 let selectedTimeValue = 0;
 
+// === Cursor Bubble ===
+const bubble = document.getElementById("cursor-bubble");
+
+document.querySelectorAll(".hover-target").forEach(target => {
+  target.addEventListener("mouseenter", (e) => {
+    const text = e.target.getAttribute("data-tooltip") || "Tooltip";
+    bubble.textContent = text;
+    bubble.style.display = "block";
+  });
+
+  target.addEventListener("mousemove", (e) => {
+    bubble.style.left = e.clientX + "px";
+    bubble.style.top = e.clientY + "px";
+  });
+
+  target.addEventListener("mouseleave", () => {
+    bubble.style.display = "none";
+  });
+});
+
 // === Throttle draw3DPlot using requestAnimationFrame ===
 let frameId = null;
 /**
