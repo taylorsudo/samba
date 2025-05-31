@@ -4,13 +4,15 @@
 
 ## Narrative
 
-We collaborated with Tom Parkinson at the University of Sydney’s IEQ Lab to explore how low-cost sensors could improve building insight. His team developed SAMBA, which tracks ten indoor environmental variables. We used a year’s worth of five-minute sensor readings from a real multi-floor office in Sydney.
+We collaborated with Tom Parkinson at the University of Sydney’s [Indoor Environmental Quality Lab](https://www.sydney.edu.au/architecture/our-research/research-labs-and-facilities/indoor-environmental-quality-lab.html) to explore how low-cost sensors could improve building insight. His team developed SAMBA, which tracks ten indoor environmental variables. We used a year’s worth of five-minute sensor readings from a real multi-floor office in Sydney.
 
 My goal was to design a landing page to help facilities managers and sustainability officers explore how indoor comfort and carbon intensity vary across space and time. The target audience also includes consultants and architects interested in how occupant experience intersects with environmental performance.
 
-With an 800-word limit, the challenge was designing a scrollable interface that could sustain attention while unpacking complex data. I added dynamic controls for filtering by season, hour, and variable, enabling comparisons between floors and zones.
+With a tight word limit, the challenge was designing a scrollable interface that could sustain attention while unpacking complex data. I added dynamic controls for filtering by season, hour, and variable, enabling comparisons between floors and zones.
 
-Monitoring shows that peak discomfort and energy use often coincide, yet most systems only track air temperature—a narrow metric that doesn’t capture the full spectrum of comfort. To challenge this, I developed a product demonstration to visualise SAMBA data—humidity, radiant temperature, airspeed, CO₂, noise, and lighting. A supplemental line chart helps highlight the misalignment between energy use and occupant comfort, comparing carbon intensity data (Electricity Maps, 2019) with Predicted Percentage Dissatisfied (PPD) scores across time.
+Monitoring shows that peak discomfort and energy use often coincide, yet most systems only track air temperature—a narrow metric that doesn’t capture the full spectrum of comfort. To challenge this, I developed a product demonstration to visualise SAMBA data—humidity, radiant temperature, airspeed, CO₂, noise, and lighting. 
+
+A supplemental line chart helps highlight the misalignment between energy use and occupant comfort, comparing carbon intensity data (Electricity Maps, 2019) with Predicted Percentage Dissatisfied (PPD) scores across time.
 
 To reinforce the need for a multi-variable approach, I also included a human-shaped bar chart showing how the body sheds heat—~60% via radiation, ~22% evaporation, ~15% conduction/convection ([Osilla et al., 2023](#references)). This underscores why comfort tracking must reflect sensory complexity. 
 

@@ -2,7 +2,7 @@
  * Displays an alert warning in the alert box based on outlier zone data.
  *
  * @param {Object} outlier - Zone with the largest deviation from average.
- * @param {string} unitLabel - Unit of measurement (e.g., °C, dB, PPM).
+ * @param {string} unitLabel - Unit of measurement (e.g., °C, dBA, PPM).
  * @param {string} zMult - Z-score multiplier (e.g., "2.1x").
  * @param {string} direction - "above" or "below" the mean.
  */

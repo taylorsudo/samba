@@ -6,7 +6,7 @@ import { zonesPerFloor } from './config.js';
  */
 export function getUnitLabel(varName) {
   const units = {
-    spl: "dB",
+    spl: "dBA",
     co2: "PPM",
     rh: "%"
   };
