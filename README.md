@@ -10,13 +10,31 @@ My goal was to design a landing page to help facilities managers and sustainabil
 
 With an 800-word limit, the challenge was designing a scrollable interface that could sustain attention while unpacking complex data. I added dynamic controls for filtering by season, hour, and variable, enabling comparisons between floors and zones.
 Monitoring shows that peak discomfort and energy use often coincide, yet most systems only track air temperature—a narrow metric that doesn’t capture the full spectrum of comfort. To challenge this, I developed a product demonstration to visualise SAMBA data—humidity, radiant temperature, airspeed, CO₂, noise, and lighting. A supplemental line chart helps highlight the misalignment between energy use and occupant comfort, comparing carbon intensity data (Electricity Maps, 2019) with Predicted Percentage Dissatisfied (PPD) scores across time.
-To reinforce the need for a multi-variable approach, I also included a human-shaped bar chart showing how the body sheds heat—~60% via radiation, ~22% evaporation, ~15% conduction/convection (Osilla et al., 2023). This underscores why comfort tracking must reflect sensory complexity. 
+To reinforce the need for a multi-variable approach, I also included a human-shaped bar chart showing how the body sheds heat—~60% via radiation, ~22% evaporation, ~15% conduction/convection ([Osilla et al., 2023](#references)). This underscores why comfort tracking must reflect sensory complexity. 
 
-The landing page also situates comfort within the carbon context. One chart notes Australia’s G20-leading coal emissions (Zieliński et al., 2022); another shows methane from coal mines may be underreported by 106% (Wright et al., 2025). These charts reinforce the idea that buildings are both comfort systems and carbon systems.
+The landing page also situates comfort within the carbon context. One chart notes Australia’s G20-leading coal emissions ([Zieliński et al., 2022](#references)); another shows methane from coal mines may be underreported by 106% ([Wright et al., 2025](#references)). These charts reinforce the idea that buildings are both comfort systems and carbon systems.
 
-Inspired by schematic sci-fi interfaces, the SAMBA visualiser includes a 3D surface plot that utilises colored mesh tiles for each zone, layered by floor. These act as 3D heatmaps, with color intensity reflecting variables like CO₂ or PPD, letting users intuitively compare conditions across the building.
+[Inspired by schematic sci-fi interfaces](https://imgur.com/a/neon-genesis-evangelion-graphical-user-interface-gifs-PF3oA#6), the SAMBA visualiser includes a 3D surface plot that utilises colored mesh tiles for each zone, layered by floor. These act as 3D heatmaps, with color intensity reflecting variables like CO₂ or PPD, letting users intuitively compare conditions across the building.
 
 I wrote a custom Python script to merge and preprocess SAMBA sensor data with hourly carbon intensity data from Electricity Maps. The script aligns timestamps, filters by season, and outputs a unified JSON file for use in the dashboard. Zones are grouped by floor, and the visualisation dynamically adjusts color scales based on the selected metric and its range.
+
+```python
+import pandas as pd
+import json
+
+# Load and process the data
+df = pd.read_csv("all-floors.csv")
+df['created_at'] = pd.to_datetime(df['created_at'])
+df['date'] = df['created_at'].dt.date
+df['hour'] = df['created_at'].dt.hour
+df['datetime'] = pd.to_datetime(df['date'].astype(str)) + pd.to_timedelta(df['hour'], unit='h')
+
+vars_of_interest = ['ta', 'tg', 'rh', 'a_s', 'spl', 'lux', 'co2', 'tmrt', 'pmv', 'ppd']
+grouped = df.groupby(['floor_level', 'zone_id', 'datetime'])[vars_of_interest].mean().reset_index()
+
+# Save as JSON
+grouped.to_json("plotly_data.json", orient="records", date_format="iso")
+```
 
 Early feedback noted the interface felt visually rich but cognitively heavy, especially for locating problem areas. I redesigned the layout to show all zones per floor at once, with a flashing alert for the most suboptimal zone. Cluttered `<meter>` displays were replaced with grouped bar charts for better clarity and scalability.
 
